@@ -1,0 +1,42 @@
+{
+  "name": "mentora-assignment",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "nodemon",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.2",
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.3.1",
+    "drizzle-orm": "^0.45.1",
+    "drizzle-zod": "^0.8.3",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^25.3.5",
+    "drizzle-kit": "^0.31.9",
+    "nodemon": "^3.1.14",
+    "prettier": "^3.8.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}

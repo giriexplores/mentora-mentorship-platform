@@ -1,0 +1,14 @@
+node_modules
+dist
+drizzle
+
+package.json
+package-lock.json
+
+.env
+.env.*
+
+logs
+*.log
+
+*.md

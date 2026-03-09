@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import { PORT, NODE_ENV } from './config/env';
 import errorMiddleware from './middlewares/error.middleware';
 import { verifyDbConnection } from './config/db';
@@ -7,7 +7,7 @@ const app = express();
 
 app.use(express.json());
 
-app.get('/', (_, res) => {
+app.get('/', (_:Request, res:Response) => {
   res.json({
     success: true,
     message: 'Welcome to Mentora API',

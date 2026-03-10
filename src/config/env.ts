@@ -4,8 +4,8 @@ import z from 'zod';
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production']).default('development'),
   DATABASE_URL: z.string().trim().min(1),
-  OPENAI_API_KEY: z.string().trim().min(1),
-  LLM_MODEL: z.string().trim().min(1).default('gpt-4o-mini'),
+  GEMINI_API_KEY: z.string().trim().min(1),
+  LLM_MODEL: z.string().trim().min(1).default('gemini-3-flash-preview'),
   JWT_SECRET: z.string().trim().min(1),
   PORT: z
     .string()
@@ -20,5 +20,5 @@ if (!parsed.success) {
   process.exit(1);
 }
 
-export const { NODE_ENV, PORT, DATABASE_URL, JWT_SECRET, OPENAI_API_KEY, LLM_MODEL } = parsed.data;
+export const { NODE_ENV, PORT, DATABASE_URL, JWT_SECRET, GEMINI_API_KEY, LLM_MODEL } = parsed.data;
 export type Env = z.infer<typeof envSchema>;

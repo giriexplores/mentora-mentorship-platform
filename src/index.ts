@@ -7,6 +7,7 @@ import studentRouter from './routes/student.routes';
 import lessonRouter from './routes/lesson.routes';
 import sessionRouter from './routes/session.routes';
 import bookingRouter from './routes/booking.routes';
+import llmRouter from './routes/llm.routes';
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use('/api/v1/students', studentRouter);
 app.use('/api/v1/lessons', lessonRouter);
 app.use('/api/v1/sessions', sessionRouter);
 app.use('/api/v1/bookings', bookingRouter);
+app.use('/api/v1/llm', llmRouter);
 
 // Global error handler
 app.use(errorMiddleware);

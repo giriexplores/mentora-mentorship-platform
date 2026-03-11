@@ -16,3 +16,4 @@ export async function lessonExists(lessonId: string): Promise<boolean> {
     .where(eq(lessons.id, lessonId));
   return !!lesson;
 }
+

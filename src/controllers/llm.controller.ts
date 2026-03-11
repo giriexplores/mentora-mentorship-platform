@@ -17,16 +17,16 @@ export async function summarize(
     const parsed = textSchema.safeParse(req.body.text);
     if (!parsed.success) {
       // Distinguish "too long" (413) from other validation failures (400)
-    const issues = parsed.error.issues[0];
+      const issues = parsed.error.issues[0];
       const statusCode = issues.code === "too_big" ? 413 : 400;
       return sendValidationError(res, parsed.error, statusCode);
     }
     const text = parsed.data;
 
     const summary = await summarizeText(text);
-    
+
     if (!summary) {
-      sendError(res, "Failed to generate summary", 500);
+      sendError(res, "Failed to generate summary", 502);
     }
 
     sendSuccess(res, { summary, model: LLM_MODEL });

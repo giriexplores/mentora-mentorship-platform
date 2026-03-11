@@ -1,17 +1,18 @@
 import { Request, Response, NextFunction } from 'express';
 import z from 'zod';
 import { insertSessionSchema } from '../schema/sessions.schema';
-import { sendSuccess, sendValidationError } from '../utils/response';
+import { sendError, sendSuccess, sendValidationError } from '../utils/response';
 import {
   createSession as persistSession,
   getSessionsByLesson as fetchSessionsByLesson,
 } from '../services/session.services';
+import { lessonExists } from '../services/lesson.services';
 
 // Override the drizzle-zod generated date field; the client sends an ISO 8601 string
 const createSessionSchema = insertSessionSchema
   .pick({ lessonId: true, topic: true, summary: true, date: true })
   .extend({
-    date: z.date(),
+    date: z.coerce.date(),
   });
 
 /** Create a new session record for a lesson (mentor only). */
@@ -28,6 +29,12 @@ export async function createSession(
     }
 
     const { lessonId, date, topic, summary } = parsed.data;
+    
+    if(!(await lessonExists(lessonId))) {
+      sendError(res, 'Lesson not found', 404);
+      return;
+    }
+
     const session = await persistSession({ lessonId, date: new Date(date), topic, summary });
     sendSuccess(res, { session }, 201);
   } catch (err) {

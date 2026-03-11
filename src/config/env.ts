@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import z from 'zod';
 
+// Validate all required environment variables at startup; crashes with a clear message if any are missing
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production']).default('development'),
   DATABASE_URL: z.string().trim().min(1),

@@ -4,6 +4,7 @@ import { getSessionsByLesson } from '../controllers/session.controller';
 import { authenticate } from '../middlewares/auth.middleware';
 import { requireRole } from '../middlewares/role.middleware';
 
+// POST / — mentor only; GET /:id/sessions — any authenticated user
 const router = Router();
 
 router.post('/', authenticate, requireRole('mentor'), createLesson);

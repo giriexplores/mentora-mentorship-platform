@@ -1,9 +1,14 @@
 import { GoogleGenAI } from "@google/genai";
 import { GEMINI_API_KEY, LLM_MODEL } from "../config/env";
 
+// Singleton GenAI client; reused across requests to avoid repeated initialisation overhead
 const ai = new GoogleGenAI({apiKey: GEMINI_API_KEY});
 
-export async function summarizeText(text: string): Promise<string> {
+/**
+ * Send `text` to Google Gemini and return a 3–6 bullet-point summary.
+ * Returns null if the model returns an empty response or if the API call fails.
+ */
+export async function summarizeText(text: string): Promise<string | null> {
   try {
     const prompt = `
 Summarize the following text.
@@ -21,8 +26,13 @@ ${text}
       contents: prompt,
     });
 
-    return response.text ?? "No summary generated.";
+    if (!response.text) {
+      return null;
+    }
+
+    return response.text;
   } catch (error) {
-      throw new Error("LLM summarization failed");
+    console.error("[LLM] summarizeText failed:", error);
+    return null;
   }
 }

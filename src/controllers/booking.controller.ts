@@ -5,8 +5,13 @@ import { createBooking as persistBooking } from '../services/booking.services';
 import { findStudentByIdAndParent } from '../services/student.services';
 import { lessonExists } from '../services/lesson.services';
 
+// Only studentId and lessonId are required from the request body
 const createBookingSchema = insertBookingSchema.pick({ studentId: true, lessonId: true });
 
+/**
+ * Create a lesson booking for a student owned by the authenticated parent.
+ * Validates that the student belongs to the parent and the lesson exists before persisting.
+ */
 export async function createBooking(
   req: Request,
   res: Response,

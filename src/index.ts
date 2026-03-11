@@ -8,17 +8,33 @@ import lessonRouter from './routes/lesson.routes';
 import sessionRouter from './routes/session.routes';
 import bookingRouter from './routes/booking.routes';
 import llmRouter from './routes/llm.routes';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from './config/swagger';
 
 const app = express();
 
 app.use(express.json());
 
+// Log every inbound request: method, path, response status, and duration
+app.use((req, res, next) => {
+  const start = Date.now();
+  res.on('finish', () => {
+    const ms = Date.now() - start;
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl} ${res.statusCode} - ${ms}ms`);
+  });
+  next();
+});
+
 app.get('/', (_: Request, res: Response) => {
   res.json({
     success: true,
     message: 'Welcome to Mentora API',
+    info: "visit /docs to access documentation",
   });
 });
+
+// Swagger documentation
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Routes
 app.use('/api/v1/auth', authRouter);

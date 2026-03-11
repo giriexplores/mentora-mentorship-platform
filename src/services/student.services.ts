@@ -2,6 +2,7 @@ import db from '../config/db';
 import { and, eq } from 'drizzle-orm';
 import { users, type PublicUser } from '../schema/users.schema';
 
+// Reused set of safe columns (no password) for student query results
 type CreateStudentInput = {
   name: string;
   email: string;
@@ -18,6 +19,7 @@ const publicColumns = {
   createdAt: users.createdAt,
 } as const;
 
+/** Insert a student user row linked to the given parent and return the public representation. */
 export async function createStudent(data: CreateStudentInput): Promise<PublicUser> {
   const [student] = await db
     .insert(users)
@@ -26,6 +28,7 @@ export async function createStudent(data: CreateStudentInput): Promise<PublicUse
   return student;
 }
 
+/** Fetch all students whose parentId matches the given parent. */
 export async function getStudentsByParent(parentId: string): Promise<PublicUser[]> {
   return db
     .select(publicColumns)

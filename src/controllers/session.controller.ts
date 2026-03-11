@@ -7,12 +7,14 @@ import {
   getSessionsByLesson as fetchSessionsByLesson,
 } from '../services/session.services';
 
+// Override the drizzle-zod generated date field; the client sends an ISO 8601 string
 const createSessionSchema = insertSessionSchema
   .pick({ lessonId: true, topic: true, summary: true, date: true })
   .extend({
     date: z.date(),
   });
 
+/** Create a new session record for a lesson (mentor only). */
 export async function createSession(
   req: Request,
   res: Response,
@@ -33,6 +35,7 @@ export async function createSession(
   }
 }
 
+/** Return all sessions belonging to the given lesson (accessible to all authenticated roles). */
 export async function getSessionsByLesson(
   req: Request,
   res: Response,

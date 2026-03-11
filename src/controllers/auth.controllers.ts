@@ -6,6 +6,7 @@ import { signToken } from '../utils/jwt';
 import { sendSuccess, sendError, sendValidationError } from '../utils/response';
 import { findUserByEmail, findUserById, createUser, emailExists } from '../services/auth.services';
 
+// Only parent and mentor roles may self-register; students are created by parents
 const signupSchema = insertUserSchema
   .pick({ name: true, email: true, password: true, role: true })
   .extend({
@@ -24,6 +25,7 @@ const loginSchema = insertUserSchema.pick({ email: true, password: true }).exten
   email: z.email(),
 });
 
+/** Register a new parent or mentor. Returns the public user object and a signed JWT. */
 export async function signup(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const parsed = signupSchema.safeParse(req.body);
@@ -48,6 +50,7 @@ export async function signup(req: Request, res: Response, next: NextFunction): P
   }
 }
 
+/** Authenticate a user by email/password. Returns a signed JWT on success. */
 export async function login(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const parsed = loginSchema.safeParse(req.body);
@@ -78,6 +81,7 @@ export async function login(req: Request, res: Response, next: NextFunction): Pr
   }
 }
 
+/** Return the profile of the currently authenticated user (derived from the JWT). */
 export async function me(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const user = await findUserById(req.user!.userId);

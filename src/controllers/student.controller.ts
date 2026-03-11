@@ -6,6 +6,7 @@ import { sendSuccess, sendError, sendValidationError } from '../utils/response';
 import { emailExists } from '../services/auth.services';
 import { createStudent as persistStudent, getStudentsByParent } from '../services/student.services';
 
+// Students require a name (parents assign one); email and password follow the same rules as auth
 const createStudentSchema = insertUserSchema
   .pick({ name: true, email: true, password: true })
   .extend({
@@ -14,6 +15,7 @@ const createStudentSchema = insertUserSchema
     password: z.string().min(6),
   });
 
+/** Create a student account under the authenticated parent. */
 export async function createStudent(
   req: Request,
   res: Response,
@@ -42,6 +44,7 @@ export async function createStudent(
   }
 }
 
+/** Return all students belonging to the authenticated parent. */
 export async function getStudents(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const parentId = req.user!.userId;

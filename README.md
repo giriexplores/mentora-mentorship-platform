@@ -2,6 +2,9 @@
 
 A REST API connecting **parents**, **mentors**, and **students** on a mentorship platform. Built with Express, TypeScript, Drizzle ORM (Neon Postgres), and Google Gemini for AI-powered text summarisation.
 
+> **Live deployment:** https://mentora-mentorship-platform.onrender.com  
+> **Interactive API docs (Swagger UI):** https://mentora-mentorship-platform.onrender.com/docs/
+
 ---
 
 ## Table of Contents
@@ -34,7 +37,7 @@ A REST API connecting **parents**, **mentors**, and **students** on a mentorship
 | Auth | JWT (jsonwebtoken) – 7-day expiry |
 | Password hashing | bcrypt (12 rounds) |
 | LLM | Google Gemini (`gemini-3-flash-preview`) via `@google/genai` |
-| API docs | Swagger UI at `/docs` |
+| API docs | Swagger UI — [live](https://mentora-mentorship-platform.onrender.com/docs/) / local at `/docs` |
 
 ---
 
@@ -100,8 +103,9 @@ npm run dev
 npm run build && npm start
 ```
 
-The server starts on `http://localhost:3000`.
-Interactive API docs are available at `http://localhost:3000/docs`.
+The server starts on `http://localhost:3000`.  
+Interactive API docs (local): http://localhost:3000/docs  
+Interactive API docs (live): https://mentora-mentorship-platform.onrender.com/docs/
 
 ---
 
